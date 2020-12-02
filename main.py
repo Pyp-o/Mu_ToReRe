@@ -1,3 +1,5 @@
+from plateau import *
+
 # '*' pions noirs
 # 'o' pions blancs
 # '.' cae vide
@@ -10,5 +12,4 @@ def affichage_plateau(state_plateau):
     print("    "+str(state_plateau[6])+"    ")
 
 if __name__ == "__main__":
-    state_plateau=['*','*','*','*','o','o','o','o','.']
-    affichage_plateau(state_plateau)
+    P = plateau()
