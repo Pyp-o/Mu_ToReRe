@@ -10,7 +10,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="affichage plateau avec parametre et if main">
+    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="affichage de l'echiquier et des pions">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606142705274</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="affichage de l'echiquier et des pions">
+      <created>1606143176501</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606143176501</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,37 +116,47 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="affichage plateau" />
     <MESSAGE value="affichage plateau avec parametre et if main" />
-    <option name="LAST_COMMIT_MESSAGE" value="affichage plateau avec parametre et if main" />
+    <MESSAGE value="affichage de l'echiquier et des pions" />
+    <option name="LAST_COMMIT_MESSAGE" value="affichage de l'echiquier et des pions" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="449" y="168" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1607346890227">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="449" y="168" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.864@0.0.1536.864" timestamp="1607346890227" />
     <state x="549" y="173" key="FileChooserDialogImpl" timestamp="1606141917621">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="173" key="FileChooserDialogImpl/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606141917621" />
-    <state width="1493" height="197" key="GridCell.Tab.0.bottom" timestamp="1606143004427">
+    <state width="1515" height="196" key="GridCell.Tab.0.bottom" timestamp="1607346910097">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.bottom/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606143004427" />
-    <state width="1493" height="197" key="GridCell.Tab.0.center" timestamp="1606143004427">
+    <state width="1493" height="197" key="GridCell.Tab.0.bottom/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606148737820" />
+    <state width="1515" height="196" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1607346910097" />
+    <state width="1515" height="196" key="GridCell.Tab.0.center" timestamp="1607346910097">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.center/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606143004427" />
-    <state width="1493" height="197" key="GridCell.Tab.0.left" timestamp="1606143004427">
+    <state width="1493" height="197" key="GridCell.Tab.0.center/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606148737820" />
+    <state width="1515" height="196" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1607346910097" />
+    <state width="1515" height="196" key="GridCell.Tab.0.left" timestamp="1607346910096">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.left/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606143004427" />
-    <state width="1493" height="197" key="GridCell.Tab.0.right" timestamp="1606143004427">
+    <state width="1493" height="197" key="GridCell.Tab.0.left/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606148737820" />
+    <state width="1515" height="196" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1607346910096" />
+    <state width="1515" height="196" key="GridCell.Tab.0.right" timestamp="1607346910097">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1493" height="197" key="GridCell.Tab.0.right/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606143004427" />
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606142709743">
+    <state width="1493" height="197" key="GridCell.Tab.0.right/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606148737820" />
+    <state width="1515" height="196" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1607346910097" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2" timestamp="1606143181574">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606142709743" />
+    <state x="361" y="165" key="Vcs.Push.Dialog.v2/0.0.1536.864/-195.-1080.1920.1080@0.0.1536.864" timestamp="1606143181574" />
   </component>
 </project>
