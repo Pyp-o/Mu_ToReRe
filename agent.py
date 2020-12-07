@@ -1,4 +1,5 @@
 from pion import *
+import random
 
 class agent():
     def __init__(self, symbole_pion):
@@ -6,6 +7,10 @@ class agent():
         self.tab_pions=[]
         self.action_possible = []
         self.historique=[]
+        self.deplacement_possible=0
+
+        random.seed()
+
         self.symbole_pion=symbole_pion
         self.creation_pion(self.symbole_pion)            
 
@@ -14,17 +19,31 @@ class agent():
         if symbole_pion == '*':
             position = 0
         elif symbole_pion == 'o':
-            position = 5
+            position = 4
         while i < 4:
             self.tab_pions.append(pion(symbole_pion, position))
             position += 1
             i += 1
     
+    def play(self, plateau):
+        self.get_actions(plateau)
+        if self.deplacement_possible == 1:
+            self.deplacement()
+
     def get_actions(self, plateau):
         i = 0
         y = 0
-        for i in range (len(self.tab_pions)):
-            voisins = self.tab_pions[i].voisins(plateau)
-            for y in range (len(voisins)):
-                self.action_possible.append(voisins[y])
-        print(self.action_possible)
+        for id_pions in range(len(self.tab_pions)):
+            case_vide = self.tab_pions[id_pions].voisins(plateau)
+            if case_vide != [] :
+                self.action_possible.append([id_pions,case_vide])
+            self.deplacement_possible = 1
+        if self.action_possible == [] :
+            print("fin de partie")
+            plateau.game = 0
+            self.deplacement_possible = 0            
+
+    def deplacement(self):
+        index_random = random.randrange(len(self.action_possible))
+        self.tab_pions[self.action_possible[index_random][0]].position = self.action_possible[index_random][1][0]
+        self.action_possible=[]
