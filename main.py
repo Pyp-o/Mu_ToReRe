@@ -14,6 +14,7 @@ def launch_game(plateau, agent_noir, agent_blanc):
         game = agent_noir.play(plateau)
         plateau.update_plateau(agent_noir, agent_blanc)
 
+#si l'agent noir ne peut plus jouer, il faut terminer la partie
         if game == 0:
             return 0
 
