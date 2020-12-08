@@ -2,14 +2,9 @@ from agent import *
 
 class plateau():
     def __init__(self):
-        self.state_plateau = [0,0,0,0,0,0,0,0,0]
+        self.state_plateau = ['.','.','.','.','.','.','.','.','.']
         self.game = 0
 
-        self.agent_noir = agent('*')
-        self.agent_blanc = agent('o')
-
-        self.update_plateau()
-        self.launch_game()
 
     def get_state_plateau(self):
         return self.state_plateau
@@ -23,25 +18,10 @@ class plateau():
         print("")
 
     # met a jour le plateau en allant chercher tous les pions des agents et leur position.
-    def update_plateau(self):
+    def update_plateau(self, agent_noir, agent_blanc):
         #reset plateau
         self.state_plateau=['.','.','.','.','.','.','.','.','.']
         for i in range(0, 4):
-            self.state_plateau[self.agent_noir.tab_pions[i].position] = self.agent_noir.symbole_pion
-            self.state_plateau[self.agent_blanc.tab_pions[i].position] = self.agent_blanc.symbole_pion
-
-    #lance et met fin à la partie
-    def launch_game(self):
-        self.game = 1
-        count_tour = 1
-        while self.game == 1 :
-            print("tour :", count_tour)
-            self.affichage_plateau()
-            self.agent_noir.play(self)
-            self.update_plateau()
-
-            self.affichage_plateau()
-            self.agent_blanc.play(self)
-            self.update_plateau()
-
-            count_tour += 1
+            self.state_plateau[agent_noir.tab_pions[i].position] = agent_noir.symbole_pion
+            self.state_plateau[agent_blanc.tab_pions[i].position] = agent_blanc.symbole_pion
+        self.affichage_plateau()

@@ -32,9 +32,10 @@ class agent():
 
     #recupere le plateau de jeu, et choisit une action
     def play(self, plateau):
-        self.get_actions(plateau)
+        game = self.get_actions(plateau)
         if self.deplacement_possible == 1:
             self.deplacement()
+        return game
 
     #en fonction du tableau de jeu, renvoie les actions possibles pour l'agent(règles connues)
     def get_actions(self, plateau):
@@ -50,6 +51,9 @@ class agent():
             plateau.game = 0
             # met fin à la partie pour l'agent également
             self.deplacement_possible = 0
+            return 0
+        else :
+            return 1
 
     #effectue un choix dans le tableau d'actions possibles
     def deplacement(self):
