@@ -12,15 +12,18 @@ class pion():
     def voisins(self, plateau):
         tab_position = []
         state_plateau = plateau.get_state_plateau()
-        #print(state_plateau)
-        #print(self.position)
 
+        #en utilisant une liste pour représenter le tableau de jeu, il faut utiliser des tests différents pour la position des pions
+        #pion au centre
         if self.position == 8 :
             for i in range (len(state_plateau)):
                 if state_plateau[i] == '.' :
                     tab_position.append(i)
+                    #une seule position est disponible, on la retourne dès qu'on l'a trouvée
+                    return tab_position
             return tab_position
 
+        #pions sur le cercle extérieur, sauf en bout de liste
         elif self.position > 0 and self.position < 7:
             if state_plateau[self.position-1] == '.' :
                 tab_position.append(self.position-1)
@@ -33,7 +36,8 @@ class pion():
                 return tab_position
             return tab_position
 
-        if self.position == 0 :
+        #pion en premiere position de liste
+        elif self.position == 0 :
             if state_plateau[7] == '.' :
                 tab_position.append(7)
             if state_plateau[1]== '.' :
@@ -45,7 +49,8 @@ class pion():
                 return tab_position
             return tab_position
 
-        if self.position == 7 :
+        #pion en derniere position de liste
+        elif self.position == 7 :
             if state_plateau[0] == '.' :
                 tab_position.append(0)
             if state_plateau[6]== '.' :
