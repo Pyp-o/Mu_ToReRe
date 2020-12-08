@@ -17,7 +17,6 @@ class agent():
         #possibilité de jouer (perdu ou non ?)
         self.deplacement_possible=0
 
-
     def creation_pion(self, symbole_pion):
         i = 0
         tab_pions = []
@@ -50,7 +49,7 @@ class agent():
             #met fin à la partie pour le plateau
             plateau.game = 0
             # met fin à la partie pour l'agent également
-            self.deplacement_possible = 0            
+            self.deplacement_possible = 0
 
     #effectue un choix dans le tableau d'actions possibles
     def deplacement(self):

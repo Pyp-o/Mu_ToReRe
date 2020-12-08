@@ -10,11 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="no changes">
+    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="add comment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pion.py" beforeDir="false" afterPath="$PROJECT_DIR$/pion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plateau.py" beforeDir="false" afterPath="$PROJECT_DIR$/plateau.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607358624394</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add comment">
+      <created>1607443797964</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1607443797964</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -134,6 +139,7 @@
     <MESSAGE value="affichage plateau avec parametre et if main" />
     <MESSAGE value="affichage de l'echiquier et des pions" />
     <MESSAGE value="no changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="no changes" />
+    <MESSAGE value="add comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="add comment" />
   </component>
 </project>

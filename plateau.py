@@ -5,17 +5,14 @@ class plateau():
         self.state_plateau = [0,0,0,0,0,0,0,0,0]
         self.game = 0
 
-        self.init_game()
+        self.agent_noir = agent('*')
+        self.agent_blanc = agent('o')
+
         self.update_plateau()
         self.launch_game()
 
     def get_state_plateau(self):
         return self.state_plateau
-
-    def init_game(self):
-        #creation des 2 joueurs.
-        self.agent_noir = agent('*')
-        self.agent_blanc = agent('o')
 
     def affichage_plateau(self):
         print("    "+str(self.state_plateau[2])+"    ")
