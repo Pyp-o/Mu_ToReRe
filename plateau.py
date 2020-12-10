@@ -1,5 +1,3 @@
-from agent import *
-
 class plateau():
     def __init__(self):
         self.state_plateau = ['.','.','.','.','.','.','.','.','.']
@@ -21,7 +19,7 @@ class plateau():
     def update_plateau(self, agent_noir, agent_blanc):
         #reset plateau
         self.state_plateau=['.','.','.','.','.','.','.','.','.']
-        for i in range(0, 4):
+        for i in range(4):
             self.state_plateau[agent_noir.tab_pions[i].position] = agent_noir.symbole_pion
             self.state_plateau[agent_blanc.tab_pions[i].position] = agent_blanc.symbole_pion
         self.affichage_plateau()

@@ -1,4 +1,5 @@
 from plateau import *
+from agent import *
 
 # '*' pions noirs
 # 'o' pions blancs

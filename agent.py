@@ -39,13 +39,17 @@ class agent():
 
     #en fonction du tableau de jeu, renvoie les actions possibles pour l'agent(règles connues)
     def get_actions(self, plateau):
-        for id_pions in range(len(self.tab_pions)):
-            case_vide = self.tab_pions[id_pions].voisins(plateau)
-            if case_vide != [] :
-                self.action_possible.append([id_pions,case_vide])
+        for i in range(len(self.tab_pions)):
+            case_vide = self.tab_pions[i].voisins(plateau)
+            self.action_possible.append(case_vide)
             self.deplacement_possible = 1
+
         #si aucune action n'est possible, la partie est perdue
-        if self.action_possible == [] :
+        Nactions = 0
+        for i in range(len(self.action_possible)):
+            if self.action_possible[i] == [] :
+                Nactions +=1
+        if Nactions==4:
             print("fin de partie")
             #met fin à la partie pour le plateau
             plateau.game = 0
@@ -58,5 +62,11 @@ class agent():
     #effectue un choix dans le tableau d'actions possibles
     def deplacement(self):
         index_random = random.randrange(len(self.action_possible))
-        self.tab_pions[self.action_possible[index_random][0]].position = self.action_possible[index_random][1][0]
+        #tant que l'on a pas un indice indcant une position correcte
+        while(self.action_possible[index_random]==[]):
+            index_random = random.randrange(len(self.action_possible))
+
+        #self.action_possible[index_random][0] le dernier [0] permet d'extraire la valeur du tableau et d'éviter des bugs par la suite
+        #n'est pas gênant, une seule position ne peut être contenu dans ce tableau
+        self.tab_pions[index_random].position = self.action_possible[index_random][0]
         self.action_possible=[]
