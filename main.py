@@ -29,26 +29,42 @@ def launch_game(plateau, agent_noir, agent_blanc):
     print("fin de partie")
     # On reinitialise la position des pions pour relancer une partie
     
-    def load_agent(agent_noir):
-        try :
-            #on peut stocker la memoire d'etat sans traitement
-            agent_noir.mem_etat = load_mem("etat.csv")  # load etats
+def load_agent(agent_noir):
+    try :
+        #on peut stocker la memoire d'etat sans traitement
+        agent_noir.mem_etat = load_mem("etat.csv")  # load etats
+        print("mem_etat", agent_noir.mem_etat)
 
-            #on va devoir concatener la position et les probas en gardant la correspondance des indices
-            position = load_mem("position.csv")  # load actions
-            proba = load_mem("proba.csv")  # load probas
+        #on va devoir concatener la position et les probas en gardant la correspondance des indices
+        position = load_mem("position.csv")  # load actions
+        proba = load_mem("proba.csv")  # load probas
 
-            # permet d'aavoir la même longueur pour chaque mémoire chargée
-            if len(proba) != len(position):
-                position.append([])
-        except:
-            return 0
+        # permet d'aavoir la même longueur pour chaque mémoire chargée
+        if len(proba) != len(position):
+            position.append([])
+
+        #donne la forme necessaire au tableau pour entrer les valeurs des probas et des actions possibles
+        for i in range(0, len(position)):
+            agent_noir.mem_actions.append([[i], [i+1]])
+
+
+        for i in range(0, len(position)):
+            agent_noir.mem_actions[i][0] = position[i]
+            agent_noir.mem_actions[i][1] = proba[i]
+
+        print("load successful")
+        return 1
+    except:
+        return 0
 
 
 if __name__ == "__main__":
     agent_noir = agent('*')
     agent_blanc = agent('o')
     plateau = plateau()
+
+    #charge la memoire pré-existante NE PAS UTILISER WORK IN PROGRESS
+    #load_agent(agent_noir)
 
     nb_game = 0
     while nb_game < 1 :
