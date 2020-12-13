@@ -1,7 +1,7 @@
 from pion import *
 import random
 import numpy as np
-
+import math
 
 class agent():
     def __init__(self, symbole_pion):
@@ -114,16 +114,38 @@ class agent():
         choix=0
 
         #si l'etat est nouveau, on récupère la dernière valeur entrée dans le tableau
+        somme_prob = 0
+        
         if etat==-1:
             #print("On rencontre un nouvel état.")
             etat = len(self.mem_etat)-1
+            
             for i in range(0,4):
                 # Si le pion a une action possible 
                 if (self.mem_actions[etat][0][i]!=-1):
                     self.mem_actions[etat][1][i] = prob
+                    somme_prob += prob
 
+            self.mem_actions[etat][1][random.randint(0,3)] += 1 - somme_prob
+
+        else : 
+            for i in range(0,4):
+                    somme_prob += self.mem_actions[etat][1][i]
+
+            if somme_prob > 1 :
+                print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",somme_prob)
+                offset = self.round_up(somme_prob - 1,3)
+                print("offset = ", offset)
+                finish = 0
+                while finish == 0:
+                    indice = random.randint(0,3)
+                    if self.mem_actions[etat][1][indice] >= offset:
+                        self.mem_actions[etat][1][indice] = self.round_up(self.mem_actions[etat][1][indice] - offset,3)
+                        finish = 1
+                print(self.mem_actions[etat][1][indice])
 
         # Sélection de l'action grace a sa probabilité
+        print("L'erreur est la : ", self.mem_actions[etat][1])
         choix = np.random.choice([0,1,2,3], 1, p = self.mem_actions[etat][1])[0]
 
         #print("Choix : ", choix)
@@ -145,34 +167,82 @@ class agent():
             
     def recompense(self):
         print("recompense")
-        #On parcour la liste dans le sens décroissant des indices.           
-        for i in range(len(self.historique_actions)-1,-1,-1) :
-            total_proba = 0
-            #On modifie les probas des actions que l'agent a entreprit
-            modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
-            #on parcourt les listes de proba
-            action_possible=0
-            for k in range(len(self.mem_actions[self.historique_actions[i][0]])):
-
-                if self.mem_actions[self.historique_actions[i][0]][0][k] != -1 :
-                    action_possible += 1
+        #On parcourt l'historique
+        """for i in range(len(self.historique_actions)-1,-1,-1) :
+            liste_indice_actions = []
+            offset = 0
+            #Calcul ajout valeur propa
+            modification = self.round_up((i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]],3)
             
-            if action_possible == 0:
-                action_possible = 1
+            #Modification de la probabilité de l'action choisie a l'état i de l'historique en s'assurant de ne pas dépasser une valeur
+            if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]+ modification > 1 :
+                offset = self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] - 1
+                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 1
+            else :
+                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = self.round_up(modification + self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]], 3)
 
-            modification = round(modification / action_possible,5)
-            for y in range(4):
-                #les autres actions on reduit leurs proba
-                if self.historique_actions[i][1] != y :
-                    if self.mem_actions[self.historique_actions[i][0]][1][y] - modification > 0.05:
-                        self.mem_actions[self.historique_actions[i][0]][1][y] = round(self.mem_actions[self.historique_actions[i][0]][1][y] - modification,5)
-                        total_proba += self.mem_actions[self.historique_actions[i][0]][1][y]
-                        #print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][y] - modification)
+            #Récupération des indices des autres actions possibles
+            for k in range(len(self.mem_actions[self.historique_actions[i][0]])):
+                if self.mem_actions[self.historique_actions[i][0]][0][k] != -1 :
+                    liste_indice_actions.append(k)
 
+            # Si liste indice action vide on a pas de proba a modifié
+            if liste_indice_actions != []:
+                # Parcours des actions non réalisée
+                for indice in liste_indice_actions:
+                    #Modification de la probabilité des actions non choisie a l'état i de l'historique en s'assurant de ne pas dépasser une valeur
+                    if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]+ modification < 0 :
+                        offset = 0 - self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
+                        self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 0
+                    else :
+                        self.mem_actions[self.historique_actions[i][0]][1][indice] = self.round_up(self.mem_actions[self.historique_actions[i][0]][1][indice] - ((modification - offset) / len(liste_indice_actions)),3)
+            
+            somme_prob = 0
+            
+            while somme_prob != 1:
+                y = 0
+                for y in range(0,3):
+                    somme_prob += self.mem_actions[self.historique_actions[i][0]][1][y]
+                    print("AHHHHHHHHHHHHHHHHHHHHHH", self.mem_actions[self.historique_actions[i][0]][1][y])
+                    print("Somme for : ", somme_prob)
+                
+                indice_proba = random.randint(0,3)
+                if self.mem_actions[self.historique_actions[i][0]][1][indice_proba]+(1-somme_prob) > 1 :
+                    self.mem_actions[self.historique_actions[i][0]][1][indice_proba] -= 1 - somme_prob
                 else :
-                    if 1 - total_proba < 0.95 :
-                        self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = round(1 - total_proba,5)
-                        #print("proba complémentaire :", (1 - total_proba))
-                #L'action qui a été choisit prend la valeur (1 - (la somme de ce que l'on a enlevé))
-            print("Nouvelles proba :", self.mem_actions[self.historique_actions[i][0]][1])
+                    self.mem_actions[self.historique_actions[i][0]][1][indice_proba] += 1 - somme_prob
+            
+            print("Nouvelles proba : ", self.mem_actions[self.historique_actions[i][0]][1])"""
 
+        #On parcourt l'historique
+        for i in range(len(self.historique_actions)-1,-1,-1) :
+            print("Proba des actions possibles : ", self.mem_actions[self.historique_actions[i][0]][1])
+            liste_indice_actions = []
+            offset = 0
+            #Calcul ajout valeur propa
+            modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
+            #print("Proba Actions : ", self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]])
+            #print("Modification : ", modification)
+
+            #Récupération des indices des autres actions possibles
+            for k in range(0,4):
+                if self.mem_actions[self.historique_actions[i][0]][0][k] != -1 and k != self.historique_actions[i][1]:
+                    liste_indice_actions.append(k)
+            
+            somme_proba = 0
+            # Si liste indice action vide on a pas de proba a modifié
+            if liste_indice_actions != []:
+                # Parcours des actions non réalisée
+                for indice in liste_indice_actions:
+                    #Modification de la probabilité des actions non choisie a l'état i de l'historique en s'assurant de ne pas dépasser une valeur
+                    self.mem_actions[self.historique_actions[i][0]][1][indice] = self.round_up(self.mem_actions[self.historique_actions[i][0]][1][indice] - (modification/len(liste_indice_actions)),3)
+                    print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][indice])
+                    somme_proba = self.round_up(self.mem_actions[self.historique_actions[i][0]][1][indice] + somme_proba,3)
+            
+            print("Somme probabilité : ",somme_proba)
+            self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = self.round_up(1 - somme_proba,3)
+            print("Nouvelles probas : ",self.mem_actions[self.historique_actions[i][0]][1])
+            
+    def round_up(self, n, decimals=0):
+        multiplier = 10 ** decimals
+        return math.ceil(n * multiplier) / multiplier
