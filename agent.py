@@ -145,34 +145,34 @@ class agent():
             
     def recompense(self):
         print("recompense")
-        #On parcour la liste dans le sens décroissant des indices. 
+        #On parcour la liste dans le sens décroissant des indices.           
         for i in range(len(self.historique_actions)-1,-1,-1) :
             total_proba = 0
-            #print("indice proba selectionnée :", self.historique_actions[i][1])
-            for y in range(len(self.mem_actions[self.historique_actions[i][0]][1])):
-                state_modification = 1    
-                modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]  
-                #On cherche la probabilité qui a été choisie pour l'augmenter
-                # On veut les diminuer les actions non choisit
-                if self.historique_actions[i][1] != y :
-                    #Si l'on a augmenté la proba de l'action sélectionné, on diminue les proba des autres actions
-                    #if state_modification : 
-                        modification = modification / (len(self.mem_actions[self.historique_actions[i][0]]) - 1)
-                        if self.mem_actions[self.historique_actions[i][0]][1][y] - modification > 0.05:
-                            self.mem_actions[self.historique_actions[i][0]][1][y] = self.mem_actions[self.historique_actions[i][0]][1][y] - modification
-                            total_proba += self.mem_actions[self.historique_actions[i][0]][1][y]
-                            print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][y] - modification)
-                
-            #Si la proba est de 1, il n'y a qu'une action possible donc on ne vient pas modifier les valeurs
-            """if (self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] == 1) :
-                state_modification = 0"""
-            """if (self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] != 1) :"""
+            #On modifie les probas des actions que l'agent a entreprit
             modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
-            if modification < 0 :
-                    print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-            if (modification + self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] < 0.95) :
-                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 1 - total_proba
-                #print("proba augmentée : ", self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]+modification)
+            #on parcourt les listes de proba
+            action_possible=0
+            for k in range(len(self.mem_actions[self.historique_actions[i][0]])):
+
+                if self.mem_actions[self.historique_actions[i][0]][0][k] != -1 :
+                    action_possible += 1
             
+            if action_possible == 0:
+                action_possible = 1
+
+            modification = round(modification / action_possible,5)
+            for y in range(4):
+                #les autres actions on reduit leurs proba
+                if self.historique_actions[i][1] != y :
+                    if self.mem_actions[self.historique_actions[i][0]][1][y] - modification > 0.05:
+                        self.mem_actions[self.historique_actions[i][0]][1][y] = round(self.mem_actions[self.historique_actions[i][0]][1][y] - modification,5)
+                        total_proba += self.mem_actions[self.historique_actions[i][0]][1][y]
+                        #print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][y] - modification)
+
+                else :
+                    if 1 - total_proba < 0.95 :
+                        self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = round(1 - total_proba,5)
+                        #print("proba complémentaire :", (1 - total_proba))
+                #L'action qui a été choisit prend la valeur (1 - (la somme de ce que l'on a enlevé))
             print("Nouvelles proba :", self.mem_actions[self.historique_actions[i][0]][1])
-            #print("probabilité sélectionné : ",self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]])
+

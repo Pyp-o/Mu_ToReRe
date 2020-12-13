@@ -1,7 +1,4 @@
-import pandas as pd
 import csv
-import numpy as np
-from Bio import SeqIO
 
 def save_mem(array, text="mem_etat"):
     #ici on ne stockera que la memoire des etats, des actions et des probas associées
