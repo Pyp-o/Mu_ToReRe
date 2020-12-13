@@ -1,6 +1,6 @@
 from pion import *
 import random
-
+import numpy as np
 
 
 class agent():
@@ -111,7 +111,7 @@ class agent():
             
         prob=1/(4-Nactions)
         choix=0
-        max_proba = []
+        max_proba = [[],[]]
 
         #si l'etat est nouveau, on récupère la dernière valeur entrée dans le tableau
         if etat==-1:
@@ -121,7 +121,8 @@ class agent():
                 # Si le pion a une action possible 
                 if (self.mem_actions[etat][0][i]!=-1):
                     self.mem_actions[etat][1][i] = prob
-                    max_proba.append(i)
+                    max_proba[0].append(i)
+                    max_proba[1].append(prob)
 
         # max_proba est u ne liste des éléments qui peuvent se déplacer qui ont la plus grande proba.
 
@@ -131,20 +132,19 @@ class agent():
             for i in range(0,4):
                 if self.mem_actions[etat][0][i] != -1 :
                     if self.mem_actions[etat][1][i] == prob :
-                        max_proba.append(i)
+                        max_proba[0].append(i)
+                        max_proba[1].append(prob)
 
                     elif self.mem_actions[etat][1][i] > prob :
-                        max_proba = []
-                        max_proba.append(i)
+                        max_proba = [[],[]]
+                        max_proba[0].append(i)
+                        max_proba[1].append(prob)
                         prob = self.mem_actions[etat][1][i]
 
         #print("Max proba :", max_proba)
 
-        # Il faut choisir quel action on met en place
-        if len(max_proba) == 1 :
-            choix = max_proba[0]
-        else :
-            choix = max_proba[random.randrange(len(max_proba))]
+        # Sélection de l'action grace a sa probabilité
+        choix = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
 
         #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
@@ -160,6 +160,7 @@ class agent():
         #print("Position aprés déplacement ; ",self.tab_pions[choix].position)
 
         self.historique_actions.append([etat, choix])
+        print("historique : ", self.historique_actions)
         self.action_possible=[]
             
 
