@@ -144,7 +144,7 @@ class agent():
         #print("Max proba :", max_proba)
 
         # Sélection de l'action grace a sa probabilité
-        choix = number_list = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
+        choix = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
 
         #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
@@ -160,6 +160,7 @@ class agent():
         #print("Position aprés déplacement ; ",self.tab_pions[choix].position)
 
         self.historique_actions.append([etat, choix])
+        print("historique : ", self.historique_actions)
         self.action_possible=[]
             
 
