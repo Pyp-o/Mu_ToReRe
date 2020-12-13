@@ -11,7 +11,8 @@ def launch_game(plateau, agent_noir, agent_blanc):
     nb_game = 1
     count_tour = 1
     plateau.update_plateau(agent_noir, agent_blanc)
-    while nb_game < 1000 :
+    while nb_game < 100 :
+        count_tour = 1
         while game == 1:
             print("tour :", count_tour)
             game = agent_noir.play(plateau)
