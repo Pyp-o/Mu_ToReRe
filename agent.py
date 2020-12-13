@@ -38,6 +38,8 @@ class agent():
         # On garde les objects pions précédemment utilisé et on les remet a la position initiale.
         i = 0
         pion_pos = 0
+        self.deplacement_possible = 1
+        
         if self.symbole_pion == '*':
             pion_pos = 0
         elif self.symbole_pion == 'o':
@@ -47,23 +49,27 @@ class agent():
             pions.position = pion_pos
             pion_pos += 1
         
+        
     #recupere le plateau de jeu, et choisit une action
     def play(self, plateau):
+        game = 1
         index = -1 #l'index d'un tableau ne peut être négatif, on s'assure de ne pas avoir de problème pour détecter un nouvel état
+        #print("état plateau : ", plateau.get_state_plateau())
+        #print("état mémoire : ",self.mem_etat)
         for i in range(len(self.mem_etat)):
-            if plateau.get_state_plateau == self.mem_etat[i]:
+            if plateau.get_state_plateau() == self.mem_etat[i]:
                 index = i   #on recupere l'etat
         #si l'etat du plateau est inconnu
         if index==-1:
             # ajout de l'etat du plateau à la memoire eds etats
             self.mem_etat.append(plateau.get_state_plateau())
-            game, Nactions = self.get_actions(plateau)
+            game = self.get_actions(plateau)
             #on ajoute à la mémoire des actions les actions et on initialise les probabilités à 0
-            self.mem_actions.append([self.action_possible, [0.0,0.0,0.0,0.0]])
+            self.mem_actions.append([self.action_possible, [0.0,0.0,0.0,0.0]])            
 
         #on fait appel à la fonction de choix de déplacement
         if self.deplacement_possible == 1:
-            self.deplacement(index, Nactions)
+            self.deplacement(index)
         return game
 
     #en fonction du tableau de jeu, renvoie les actions possibles pour l'agent(règles connues)
@@ -71,6 +77,7 @@ class agent():
         for i in range(len(self.tab_pions)):
             #print(self.action_possible)
             self.action_possible.append(self.tab_pions[i].voisins(plateau))
+            #print("Déplacement possible sur : ", self.action_possible[-1])
             self.deplacement_possible = 1
 
         #si aucune action n'est possible, la partie est perdue
@@ -86,12 +93,22 @@ class agent():
             # met fin à la partie pour l'agent également
             self.deplacement_possible = 0
             self.action_possible=[]
-            return(0, Nactions)
+            return(0)
         else :
-            return(1, Nactions)
+            return(1)
 
     #effectue un choix dans le tableau d'actions possibles
-    def deplacement(self, etat, Nactions):
+    def deplacement(self, etat):
+        #print("C'est a moi de jouer : ", self.symbole_pion)
+        Nactions = 4
+        print("actions possibles : ", self.mem_actions[etat][0])
+        for elem in self.mem_actions[etat][0]:
+            if elem != -1 :
+                Nactions -= 1
+        
+        if Nactions == 4 :
+            return
+            
         prob=1/(4-Nactions)
         choix=0
         max_proba = []
@@ -111,13 +128,15 @@ class agent():
         # L'état est connu, on veut prendre la meilleure proba
         else :
             print("On connait l'état :", self.mem_actions[etat])
-            if self.mem_actions[etat][0][i] != -1 :
-                if self.mem_actions[etat][1][i] == prob :
-                    max_proba.append(i)
-                elif self.mem_actions[etat][1][i] > prob :
-                    max_proba = []
-                    max_proba.append(i)
-                    prob = self.mem_actions[etat][1][i]
+            for i in range(0,4):
+                if self.mem_actions[etat][0][i] != -1 :
+                    if self.mem_actions[etat][1][i] == prob :
+                        max_proba.append(i)
+
+                    elif self.mem_actions[etat][1][i] > prob :
+                        max_proba = []
+                        max_proba.append(i)
+                        prob = self.mem_actions[etat][1][i]
 
         #print("Max proba :", max_proba)
 
@@ -127,12 +146,19 @@ class agent():
         else :
             choix = max_proba[random.randrange(len(max_proba))]
 
+        #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
 
         #print("Position pion : ",self.tab_pions[3].position)
         #print("Case disponible : ", self.mem_actions[etat][0][choix])
 
+        #print("On regarde a cet indice de la mémoire : ", etat)
+
+
+        #print("Position de base ; ",self.tab_pions[choix].position)
         self.tab_pions[choix].position = self.mem_actions[etat][0][choix]
+        #print("Position aprés déplacement ; ",self.tab_pions[choix].position)
+
         self.historique_actions.append([etat, choix])
         self.action_possible=[]
             

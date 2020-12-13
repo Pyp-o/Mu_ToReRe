@@ -22,7 +22,7 @@ class plateau():
         for i in range(4):
             self.state_plateau[agent_noir.tab_pions[i].position] = agent_noir.symbole_pion
             self.state_plateau[agent_blanc.tab_pions[i].position] = agent_blanc.symbole_pion
-        #self.affichage_plateau()
+        self.affichage_plateau()
 
     def new_game(self, agent_noir, agent_blanc):
         agent_noir.reset_pions()
