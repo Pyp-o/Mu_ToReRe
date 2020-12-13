@@ -93,6 +93,7 @@ class agent():
             # met fin à la partie pour l'agent également
             self.deplacement_possible = 0
             self.action_possible=[]
+            self.recompense()
             return(0)
         else :
             return(1)
@@ -111,7 +112,6 @@ class agent():
             
         prob=1/(4-Nactions)
         choix=0
-        max_proba = [[],[]]
 
         #si l'etat est nouveau, on récupère la dernière valeur entrée dans le tableau
         if etat==-1:
@@ -121,30 +121,10 @@ class agent():
                 # Si le pion a une action possible 
                 if (self.mem_actions[etat][0][i]!=-1):
                     self.mem_actions[etat][1][i] = prob
-                    max_proba[0].append(i)
-                    max_proba[1].append(prob)
 
-        # max_proba est u ne liste des éléments qui peuvent se déplacer qui ont la plus grande proba.
-
-        # L'état est connu, on veut prendre la meilleure proba
-        else :
-            print("On connait l'état :", self.mem_actions[etat])
-            for i in range(0,4):
-                if self.mem_actions[etat][0][i] != -1 :
-                    if self.mem_actions[etat][1][i] == prob :
-                        max_proba[0].append(i)
-                        max_proba[1].append(prob)
-
-                    elif self.mem_actions[etat][1][i] > prob :
-                        max_proba = [[],[]]
-                        max_proba[0].append(i)
-                        max_proba[1].append(prob)
-                        prob = self.mem_actions[etat][1][i]
-
-        #print("Max proba :", max_proba)
 
         # Sélection de l'action grace a sa probabilité
-        choix = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
+        choix = np.random.choice([0,1,2,3], 1, p = self.mem_actions[etat][1])[0]
 
         #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
@@ -160,64 +140,39 @@ class agent():
         #print("Position aprés déplacement ; ",self.tab_pions[choix].position)
 
         self.historique_actions.append([etat, choix])
-        print("historique : ", self.historique_actions)
+        #print("historique : ", self.historique_actions)
         self.action_possible=[]
             
-
-
-
-
-
-
-
-
-
-
-
-
-        """#print("self.mem_actions[etat][1][i]", self.mem_actions[etat][1][i])
-        #etat[0] = actions possibles, etat[1] les probabilitées de faire ces actions
-        if (self.mem_actions[etat][0][i]!=-1):
-            if (self.mem_actions[etat][1][i]+(random.randrange(0,10)/10))>prob:
-                prob=self.mem_actions[etat][1][i]
-                choix=i
-                print("choix in for loop", choix)
-            else :
-                self.mem_actions[etat][1][i] = random.randrange(0,10)/10"""
-
-        """print("choix",choix)
-        print("mem etat", self.mem_etat)
-        print("mem actions", self.mem_actions[etat][0][choix])"""
-
-        """#try:
-        print("self.mem_actions[etat][0]", self.mem_actions[etat])
-        print("choix", choix)
-        try:
-            self.tab_pions[choix].position = self.mem_actions[etat][0][choix][0]
-            self.historique_actions.append([etat, choix])
-            self.action_possible=[]
-        except:
-            self.action_possible = []
-            print("")"""
-
-
-
-
-
-
-
-
-        ############ ancienne fonction de déplacement ############
-
-        """# effectue un choix dans le tableau d'actions possibles
-        def deplacement(self, index):
-            index_random = random.randrange(len(self.action_possible))
-            # tant que l'on a pas un indice indcant une position correcte
-            while (self.action_possible[index_random] == []):
-                index_random = random.randrange(len(self.action_possible))
-
-            self.action_possible[index_random][0] le dernier [0] permet d'extraire la valeur du tableau et d'éviter des bugs par la suite
-            n'est pas gênant, une seule position ne peut être contenu dans ce tableau
-
-            self.tab_pions[index_random].position = self.action_possible[index_random][0]
-            self.action_possible = []"""
+    def recompense(self):
+        print("recompense")
+        #On parcour la liste dans le sens décroissant des indices. 
+        for i in range(len(self.historique_actions)-1,-1,-1) :
+            total_proba = 0
+            #print("indice proba selectionnée :", self.historique_actions[i][1])
+            for y in range(len(self.mem_actions[self.historique_actions[i][0]][1])):
+                state_modification = 1    
+                modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]  
+                #On cherche la probabilité qui a été choisie pour l'augmenter
+                # On veut les diminuer les actions non choisit
+                if self.historique_actions[i][1] != y :
+                    #Si l'on a augmenté la proba de l'action sélectionné, on diminue les proba des autres actions
+                    #if state_modification : 
+                        modification = modification / (len(self.mem_actions[self.historique_actions[i][0]]) - 1)
+                        if self.mem_actions[self.historique_actions[i][0]][1][y] - modification > 0.05:
+                            self.mem_actions[self.historique_actions[i][0]][1][y] = self.mem_actions[self.historique_actions[i][0]][1][y] - modification
+                            total_proba += self.mem_actions[self.historique_actions[i][0]][1][y]
+                            print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][y] - modification)
+                
+            #Si la proba est de 1, il n'y a qu'une action possible donc on ne vient pas modifier les valeurs
+            """if (self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] == 1) :
+                state_modification = 0"""
+            """if (self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] != 1) :"""
+            modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
+            if modification < 0 :
+                    print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+            if (modification + self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] < 0.95) :
+                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 1 - total_proba
+                #print("proba augmentée : ", self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]+modification)
+            
+            print("Nouvelles proba :", self.mem_actions[self.historique_actions[i][0]][1])
+            #print("probabilité sélectionné : ",self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]])
