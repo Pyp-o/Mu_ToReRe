@@ -10,11 +10,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="add comment">
+    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="states, actions and probab save under CSV file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plateau.py" beforeDir="false" afterPath="$PROJECT_DIR$/plateau.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/memToCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/memToCSV.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -62,9 +61,53 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="memToCSV (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MuToReRe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/memToCSV.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="memToCSV" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MuToReRe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\pierr\OneDrive\Documents\ENIB\Cours\S9\IAS\IAS_TP\MuToReRe\memToCSV.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.memToCSV (1)" />
+        <item itemvalue="Python.memToCSV" />
       </list>
     </recent_temporary>
   </component>
@@ -126,7 +169,63 @@
       <option name="project" value="LOCAL" />
       <updated>1607445325001</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="agents and plateau independant&#10;game is included in main.py">
+      <created>1607449863159</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1607449863159</updated>
+    </task>
+    <task id="LOCAL-00009" summary="unknown changes">
+      <created>1607451238687</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607451238687</updated>
+    </task>
+    <task id="LOCAL-00010" summary="actions possibles toujours sous la même forme&#10;[[position possible pour pion 0],[position pour pion 1],[...],[...]]">
+      <created>1607590887664</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1607590887664</updated>
+    </task>
+    <task id="LOCAL-00011" summary="système de mémoire d'etat et d'action">
+      <created>1607605985298</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1607605985298</updated>
+    </task>
+    <task id="LOCAL-00012" summary="main changes">
+      <created>1607849445609</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1607849445609</updated>
+    </task>
+    <task id="LOCAL-00013" summary="states, actions and probab save under CSV file">
+      <created>1607856856018</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1607856856018</updated>
+    </task>
+    <task id="LOCAL-00014" summary="states, actions and probab save under CSV file">
+      <created>1607856931316</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1607856931316</updated>
+    </task>
+    <task id="LOCAL-00015" summary="states, actions and probab save under CSV file">
+      <created>1607856940832</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1607856940832</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,6 +247,13 @@
     <MESSAGE value="affichage de l'echiquier et des pions" />
     <MESSAGE value="no changes" />
     <MESSAGE value="add comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="add comment" />
+    <MESSAGE value="agents and plateau independant&#10;game is included in main.py" />
+    <MESSAGE value="unknown changes" />
+    <MESSAGE value="comment" />
+    <MESSAGE value="actions possibles toujours sous la même forme&#10;[[position possible pour pion 0],[position pour pion 1],[...],[...]]" />
+    <MESSAGE value="système de mémoire d'etat et d'action" />
+    <MESSAGE value="main changes" />
+    <MESSAGE value="states, actions and probab save under CSV file" />
+    <option name="LAST_COMMIT_MESSAGE" value="states, actions and probab save under CSV file" />
   </component>
 </project>
