@@ -143,12 +143,8 @@ class agent():
 
         #print("Max proba :", max_proba)
 
-        # Il faut choisir quel action on met en place
-        if len(max_proba) == 1 :
-            choix = max_proba[0][0]
-        else :
-            choix = number_list = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
-            #choix = max_proba[random.randrange(len(max_proba))]
+        # Sélection de l'action grace a sa probabilité
+        choix = number_list = np.random.choice(max_proba[0], 1, p = max_proba[1])[0]
 
         #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
