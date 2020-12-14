@@ -10,10 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="states, actions and probab save under CSV file">
+    <list default="true" id="7be3d4fc-1f0b-4945-bd87-8435de92018d" name="Default Changelist" comment="save does not work">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memToCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/memToCSV.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -225,7 +224,21 @@
       <option name="project" value="LOCAL" />
       <updated>1607856940832</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="save bug fixed">
+      <created>1607871231348</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1607871231348</updated>
+    </task>
+    <task id="LOCAL-00017" summary="save does not work">
+      <created>1607873958986</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1607873958986</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +267,8 @@
     <MESSAGE value="système de mémoire d'etat et d'action" />
     <MESSAGE value="main changes" />
     <MESSAGE value="states, actions and probab save under CSV file" />
-    <option name="LAST_COMMIT_MESSAGE" value="states, actions and probab save under CSV file" />
+    <MESSAGE value="save bug fixed" />
+    <MESSAGE value="save does not work" />
+    <option name="LAST_COMMIT_MESSAGE" value="save does not work" />
   </component>
 </project>
