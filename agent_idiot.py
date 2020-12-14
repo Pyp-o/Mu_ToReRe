@@ -24,8 +24,6 @@ class agent_idiot():
         #possibilité de jouer (perdu ou non ?)
         self.deplacement_possible=0
 
-        self.counter_essai = 0
-
     def creation_pion(self):
         i = 0
         pion_pos = 0
@@ -72,11 +70,8 @@ class agent_idiot():
             #print( self.mem_actions)
             self.get_actions()
         game = self.decision(index)
+        return 1
 
-        if game == 1 :
-            return game
-        elif game == 0 : 
-            return game
 
     #en fonction du tableau de jeu, renvoie les actions possibles pour l'agent(règles connues)
     def get_actions(self):
@@ -90,7 +85,7 @@ class agent_idiot():
                 index = random.randint(0,35)
                 if liste_proba[index] != 1:
                     liste_proba[index] = 1
-                elif index < len(liste_proba) :
+                elif index < len(liste_proba)-1 :
                     index += 1
                     liste_proba[index] = 1
                 else : 
@@ -130,31 +125,20 @@ class agent_idiot():
         #print("case_visee = ", case_visee)
         #print("id_pions = ", id_pion)
         deplacement_fait = self.deplacement(id_pion, case_visee, etat)
-        print("Déplacement vaut : ", deplacement_fait)
-        if deplacement_fait == 1:
-            return deplacement_fait 
-        elif deplacement_fait == -1:
-            return deplacement_fait
-
-        
+        if deplacement_fait :
+            return 1 
    
 
     #effectue un choix dans le tableau d'actions possibles
     def deplacement(self, id_pion, case_visee, etat):
-        action_possible = self.verif_regle(id_pion,case_visee, etat)
-        self.counter_essai += 1 
-        if self.counter_essai < 100: 
-            if action_possible:
-                self.tab_pions[id_pion].position = case_visee
-                self.counter_essai = 0
-                return 1 
-                #print("Nouvelle position du pions : ", self.tab_pions[id_pion].position)
-                
-            else :
-                self.punition(id_pion, case_visee, etat)
-                self.decision(etat)
+        action_possible = self.verif_regle(id_pion,case_visee, etat)   
+        if action_possible:
+            self.tab_pions[id_pion].position = case_visee
+            #print("Nouvelle position du pions : ", self.tab_pions[id_pion].position)
+            
         else :
-            return -1
+            self.punition(id_pion, case_visee, etat)
+            self.decision(etat)
 
         
     def verif_regle(self, id_pion, case_visee, etat):
