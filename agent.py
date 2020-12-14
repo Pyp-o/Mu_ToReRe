@@ -163,9 +163,9 @@ class agent():
             for k in range(0,4):
               self.mem_actions[self.historique_actions[i][0]][1][k] = int(self.mem_actions[self.historique_actions[i][0]][1][k])
 
-            """for k in range(0,4):
+            for k in range(0,4):
                 if  self.mem_actions[self.historique_actions[i][0]][1][k] < 0:
-                    self.mem_actions[self.historique_actions[i][0]][1][k] = 0"""
+                    self.mem_actions[self.historique_actions[i][0]][1][k] = 0
 
             print("proba castée", self.mem_actions[self.historique_actions[i][0]][1])
 
@@ -191,6 +191,10 @@ class agent():
                         self.mem_actions[self.historique_actions[i][0]][1][y] -= int((modification - offset)/nb_action)
                 
                 print("proba Apres modif", self.mem_actions[self.historique_actions[i][0]][1])
+
+                for k in range(0, 4):
+                    if self.mem_actions[self.historique_actions[i][0]][1][k] < 0:
+                        self.mem_actions[self.historique_actions[i][0]][1][k] = 0
                 
                 somme_proba = 0
                 proba_max = 0
