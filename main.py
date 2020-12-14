@@ -13,7 +13,7 @@ def launch_game(plateau, agent_noir, agent_blanc):
     plateau.update_plateau(agent_noir, agent_blanc)
 
     while game == 1:
-        print("tour :", count_tour)
+        #print("tour :", count_tour)
         game = agent_noir.play(plateau)
         plateau.update_plateau(agent_noir, agent_blanc)
 
@@ -33,7 +33,7 @@ def load_agent(agent_noir):
     try :
         #on peut stocker la memoire d'etat sans traitement
         agent_noir.mem_etat = load_mem("etat.csv")  # load etats
-        print("mem_etat", agent_noir.mem_etat)
+        #print("mem_etat", agent_noir.mem_etat)
 
         #on va devoir concatener la position et les probas en gardant la correspondance des indices
         position = load_mem("position.csv")  # load actions
@@ -72,6 +72,6 @@ if __name__ == "__main__":
         plateau.new_game(agent_noir, agent_blanc)
         nb_game += 1
 
-    save_mem(agent_noir.mem_actions, "mem_action")   #save actions et probas
-    save_mem(agent_noir.mem_etat, "mem_etat")          #save etat'
+    #save_mem(agent_noir.mem_actions, "mem_action")   #save actions et probas
+    #save_mem(agent_noir.mem_etat, "mem_etat")          #save etat'
 
