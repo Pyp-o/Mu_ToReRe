@@ -67,7 +67,7 @@ if __name__ == "__main__":
     #load_agent(agent_noir)
 
     nb_game = 0
-    while nb_game < 20 :
+    while nb_game < 100 :
         launch_game(plateau, agent_noir, agent_blanc)
         plateau.new_game(agent_noir, agent_blanc)
         nb_game += 1
