@@ -1,5 +1,6 @@
 from plateau import *
 from agent import *
+from agent_idiot import *
 from memToCSV import *
 
 # '*' pions noirs
@@ -30,6 +31,7 @@ def launch_game(plateau, agent_noir, agent_blanc):
 
     agent_noir.recompense(1)
     agent_blanc.recompense(0)
+    plateau.affichage_plateau()
 
     print("fin de partie")
     # On reinitialise la position des pions pour relancer une partie
@@ -66,13 +68,14 @@ def load_agent(agent_noir):
 if __name__ == "__main__":
     agent_noir = agent('*')
     agent_blanc = agent('o')
+    #agent_blanc = agent_idiot('o')
     plateau = plateau()
 
     #charge la memoire pré-existante NE PAS UTILISER WORK IN PROGRESS
     #load_agent(agent_noir)
 
     nb_game = 0
-    while nb_game < 20 :
+    while nb_game < 40 :
         launch_game(plateau, agent_noir, agent_blanc)
         plateau.new_game(agent_noir, agent_blanc)
         nb_game += 1
