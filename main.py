@@ -19,12 +19,17 @@ def launch_game(plateau, agent_noir, agent_blanc):
 
         #si l'agent noir ne peut plus jouer, il faut terminer la partie
         if game == 0:
+            agent_noir.recompense(0)
+            agent_blanc.recompense(1)
             break
 
         game = agent_blanc.play(plateau)
         plateau.update_plateau(agent_noir, agent_blanc)
 
         count_tour += 1
+
+    agent_noir.recompense(1)
+    agent_blanc.recompense(0)
 
     print("fin de partie")
     # On reinitialise la position des pions pour relancer une partie
@@ -67,7 +72,7 @@ if __name__ == "__main__":
     #load_agent(agent_noir)
 
     nb_game = 0
-    while nb_game < 10 :
+    while nb_game < 20 :
         launch_game(plateau, agent_noir, agent_blanc)
         plateau.new_game(agent_noir, agent_blanc)
         nb_game += 1

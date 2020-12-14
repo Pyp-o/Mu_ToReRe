@@ -95,7 +95,6 @@ class agent():
             # met fin à la partie pour l'agent également
             self.deplacement_possible = 0
             self.action_possible=[]
-            self.recompense()
             return(0)
         else :
             return(1)
@@ -150,7 +149,7 @@ class agent():
         self.historique_actions.append([etat, choix])
         self.action_possible=[]
             
-    def recompense(self):
+    def recompense(self, gagné):
         print("recompense")
         #On parcourt l'historique
         for i in range(len(self.historique_actions)-1,-1,-1) :
@@ -176,20 +175,29 @@ class agent():
 
             if nb_action!=0:
                 # Augmentation de la probba de l'action choisi a l'index i de l'historique
-                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] += modification
+                if gagné==1:
+                    self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] += modification
+                elif gagné==0:
+                    self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] -= modification
 
                 #verification que la proba augmentée ne soit pas supérieure à 100
                 offset=0
-                if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] > 95 :
-                    offset = self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] - 95
-                    self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 95
+                if gagné==1:
+                    if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] > 95 :
+                        offset = self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] - 95
+                        self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 95
+                elif gagné==0:
+                    if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] < 5 :
+                        offset = 5 - self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
+                        self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 5
 
                 # Parcours des proba des actions pour les diminuer
                 for y in range(len(self.mem_actions[self.historique_actions[i][0]])):
                     if y != self.historique_actions[i][1] and self.mem_actions[self.historique_actions[i][0]][0][y] != -1  :
-                        #print("self.mem_actions[self.historique_actions[i][0]][1][y]", self.mem_actions[self.historique_actions[i][0]][1][y])
-                        self.mem_actions[self.historique_actions[i][0]][1][y] -= int((modification - offset)/nb_action)
-                
+                        if gagné==1:
+                            self.mem_actions[self.historique_actions[i][0]][1][y] -= int((modification - offset)/nb_action)
+                        elif gagné==0:
+                            self.mem_actions[self.historique_actions[i][0]][1][y] -= int((modification - offset) / nb_action)
                 print("proba Apres modif", self.mem_actions[self.historique_actions[i][0]][1])
 
                 for k in range(0, 4):
