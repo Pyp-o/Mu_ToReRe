@@ -66,13 +66,12 @@ if __name__ == "__main__":
     #charge la memoire pré-existante NE PAS UTILISER WORK IN PROGRESS
     #load_agent(agent_noir)
 
-    nb_game = 1
-    while nb_game < 100 :
-        print("game :", nb_game)
+    nb_game = 0
+    while nb_game < 20 :
         launch_game(plateau, agent_noir, agent_blanc)
         plateau.new_game(agent_noir, agent_blanc)
         nb_game += 1
 
     save_mem(agent_noir.mem_actions, "mem_action")   #save actions et probas
-    save_mem(agent_noir.mem_etat, "mem_etat")          #save etat
+    save_mem(agent_noir.mem_etat, "mem_etat")          #save etat'
 

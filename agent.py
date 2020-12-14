@@ -3,6 +3,8 @@ import random
 import numpy as np
 import math
 
+TAUX_APPRENTISSAGE = 0.10
+
 class agent():
     def __init__(self, symbole_pion):
         #mémoire des états vus et des actions faites lors de la dernière partie jouée
@@ -93,7 +95,7 @@ class agent():
             # met fin à la partie pour l'agent également
             self.deplacement_possible = 0
             self.action_possible=[]
-            self.recompense()
+            #self.recompense()
             return(0)
         else :
             return(1)
@@ -110,7 +112,7 @@ class agent():
         if Nactions == 4 :
             return
             
-        prob=1/(4-Nactions)
+        prob=int(100/(4-Nactions))
         choix=0
 
         #si l'etat est nouveau, on récupère la dernière valeur entrée dans le tableau
@@ -124,29 +126,28 @@ class agent():
                 # Si le pion a une action possible 
                 if (self.mem_actions[etat][0][i]!=-1):
                     self.mem_actions[etat][1][i] = prob
-                    somme_prob += prob
 
-            self.mem_actions[etat][1][random.randint(0,3)] += 1 - somme_prob
+            #self.mem_actions[etat][1][random.randint(0,3)] += 1 - somme_prob
 
-        else : 
-            for i in range(0,4):
-                    somme_prob += self.mem_actions[etat][1][i]
+        sum=0
+        prob=100
+        indice = -1
+        for i in range(len(self.mem_actions[etat][1])):
+            sum+=self.mem_actions[etat][1][i]
+            if self.mem_actions[etat][1][i]<prob and self.mem_actions[etat][1][i]>0:
+                prob = self.mem_actions[etat][1][i]
+                indice = i
+        
+        self.mem_actions[etat][1][indice]+=100-sum
 
-            if somme_prob > 1 :
-                print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",somme_prob)
-                offset = self.round_up(somme_prob - 1,3)
-                print("offset = ", offset)
-                finish = 0
-                while finish == 0:
-                    indice = random.randint(0,3)
-                    if self.mem_actions[etat][1][indice] >= offset:
-                        self.mem_actions[etat][1][indice] = self.round_up(self.mem_actions[etat][1][indice] - offset,3)
-                        finish = 1
-                print(self.mem_actions[etat][1][indice])
-
+        print("mem_actions",self.mem_actions[etat])
         # Sélection de l'action grace a sa probabilité
-        print("L'erreur est la : ", self.mem_actions[etat][1])
-        choix = np.random.choice([0,1,2,3], 1, p = self.mem_actions[etat][1])[0]
+        #print("L'erreur est la : ", self.mem_actions[etat][1])
+        proba=[]
+        for i in range(len(self.mem_actions[etat][1])):
+            proba.append(self.mem_actions[etat][1][i]/100)
+        #print("proba ", proba)
+        choix = np.random.choice([0,1,2,3], 1, p = proba)[0]
 
         #print("Choix : ", choix)
         #print("mem etat", self.mem_etat)
@@ -168,6 +169,55 @@ class agent():
     def recompense(self):
         print("recompense")
         #On parcourt l'historique
+        for i in range(len(self.historique_actions)-1,-1,-1) :
+            modification = int((i/len(self.historique_actions))*(TAUX_APPRENTISSAGE)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]])
+            nb_action = 0
+
+            for y in range(len(self.mem_actions[self.historique_actions[i][0]])):
+                if self.mem_actions[self.historique_actions[i][0]][y] != -1 :
+                    nb_action += 1 
+
+            # Augmentation de la probba de l'action choisi a l'index i de l'historique
+            self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] += modification
+
+            offset=0
+            if self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] > 100 :
+                offset = self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] - 100
+                self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = 100
+
+            # Parcours des proba des actions pour 
+            for y in range(len(self.mem_actions[self.historique_actions[i][0]])):
+                if y != self.historique_actions[i][1] :
+                    self.mem_actions[self.historique_actions[i][0]][1][y] -= int((modification - offset)/nb_action)
+
+            sum=0
+            prob_min=100
+            indice_min = -1
+            prob_max=0
+            indice_max = -1
+            for y in range(len(self.mem_actions[self.historique_actions[i][0]][1])):
+                sum+=self.mem_actions[self.historique_actions[i][0]][1][y]
+                if self.mem_actions[self.historique_actions[i][0]][1][y] < prob_min and self.mem_actions[self.historique_actions[i][0]][1][y] > 0 :
+                    prob_min = self.mem_actions[self.historique_actions[i][0]][1][y]
+                    indice_min = i
+                if self.mem_actions[self.historique_actions[i][0]][1][y] > prob_max and self.mem_actions[self.historique_actions[i][0]][1][y] < 100:
+                    prob_max = self.mem_actions[self.historique_actions[i][0]][1][y]
+                    indice_max = i
+            print("indice max :", indice_max)
+            print("indice min :", indice_min)
+            print("self.mem_actions[self.historique_actions[i][0]][1]", self.mem_actions[self.historique_actions[i][0]][1])
+            print("sum", sum)
+            print("offset", offset)
+            if indice_min != -1 or indice_max!=-1:
+                if sum < 100:
+                    self.mem_actions[self.historique_actions[i][0]][1][indice_min]+=100-sum
+                else :
+                    self.mem_actions[self.historique_actions[i][0]][1][indice_max]+=100-sum
+            
+
+            
+
+
         """for i in range(len(self.historique_actions)-1,-1,-1) :
             liste_indice_actions = []
             offset = 0
@@ -214,35 +264,4 @@ class agent():
             
             print("Nouvelles proba : ", self.mem_actions[self.historique_actions[i][0]][1])"""
 
-        #On parcourt l'historique
-        for i in range(len(self.historique_actions)-1,-1,-1) :
-            print("Proba des actions possibles : ", self.mem_actions[self.historique_actions[i][0]][1])
-            liste_indice_actions = []
-            offset = 0
-            #Calcul ajout valeur propa
-            modification = (i/len(self.historique_actions))*(1/10)*self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]]
-            #print("Proba Actions : ", self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]])
-            #print("Modification : ", modification)
 
-            #Récupération des indices des autres actions possibles
-            for k in range(0,4):
-                if self.mem_actions[self.historique_actions[i][0]][0][k] != -1 and k != self.historique_actions[i][1]:
-                    liste_indice_actions.append(k)
-            
-            somme_proba = 0
-            # Si liste indice action vide on a pas de proba a modifié
-            if liste_indice_actions != []:
-                # Parcours des actions non réalisée
-                for indice in liste_indice_actions:
-                    #Modification de la probabilité des actions non choisie a l'état i de l'historique en s'assurant de ne pas dépasser une valeur
-                    self.mem_actions[self.historique_actions[i][0]][1][indice] = self.round_up(self.mem_actions[self.historique_actions[i][0]][1][indice] - (modification/len(liste_indice_actions)),3)
-                    print("Proba diminuée : ", self.mem_actions[self.historique_actions[i][0]][1][indice])
-                    somme_proba = self.round_up(self.mem_actions[self.historique_actions[i][0]][1][indice] + somme_proba,3)
-            
-            print("Somme probabilité : ",somme_proba)
-            self.mem_actions[self.historique_actions[i][0]][1][self.historique_actions[i][1]] = self.round_up(1 - somme_proba,3)
-            print("Nouvelles probas : ",self.mem_actions[self.historique_actions[i][0]][1])
-            
-    def round_up(self, n, decimals=0):
-        multiplier = 10 ** decimals
-        return math.ceil(n * multiplier) / multiplier
